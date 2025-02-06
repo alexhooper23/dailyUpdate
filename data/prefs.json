@@ -1,0 +1,48 @@
+{
+    "calFeeds": [
+        {
+            "url": "http://p44-caldav.icloud.com/published/2/MTAxMDQyMTE0MjkxMDEwNLSFMelm7NAIMcVmokvmlTQ7WXeCl_aiC6H_k4WgUNHhcPgart9Jw157uItJAcI2Q0RMo1VPDE_S6tLy_o7E1R8",
+            "prop_1": [
+                "title",
+                "banana"
+            ],
+            "prop_2": [
+                "title",
+                "banana"
+            ],
+            "calFile": "Personal"
+        },
+        {
+            "url": "https://calendars.icloud.com/holidays/us_en-us.ics/",
+            "prop_1": [
+                "title",
+                "banana"
+            ],
+            "prop_2": [
+                "title",
+                "banana"
+            ],
+            "calFile": "US Holidays"
+        }
+    ],
+    "countdowns": {
+        "name1": "date1",
+        "name2": "date2",
+        "name3": "date3",
+        "name4": "date4"
+    },
+    "time": {
+        "seconds": true,
+        "format": 24,
+        "zone": "est",
+        "flash_col": false,
+        "am_pm": false
+    },
+    "weatherFormat": [
+        "ctemp",
+        "max",
+        "min",
+        "cprecip",
+        "chumid"
+    ]
+}
