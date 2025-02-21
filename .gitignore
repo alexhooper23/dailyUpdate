@@ -1,6 +1,10 @@
-# Default ignored files
-/shelf/
+# defaults
 /workspace.xml
 /.idea/
 *__pycache__/
+
+#macOS file management
 *.DS_Store
+
+# user data files
+/data/private/*

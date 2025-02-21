@@ -9,18 +9,18 @@ from data_processing import fetch_ui_cal_events, pref_pull
 import threading, queue
 
 # gui handlers
-import tkinter as tk
-from tkinter import ttk, font
+import customtkinter as ctk_l
 
 import random
+import socket
 
 print("Session code p initiated")
 
-main_window = tk.Tk()
+main_window = ctk_l.CTk()
 main_window.title("DailyUpdate")
 main_window.geometry("1920x1080")
 
-time_tk = tk.StringVar()
+time_tk = ckt_l.StringVar()
 access_code = tk.IntVar()
 
 update_time_based_functions = threading.Event()
@@ -76,13 +76,13 @@ for i in range(5):
     main_window.rowconfigure(i, weight=1, minsize=50)
 
     for j in range(5):
-        frame = tk.Frame(
+        frame = ctk_l.Frame(
             master=main_window,
-            relief=tk.SOLID,
+            relief=ctk_l.SOLID,
             borderwidth=1
         )
         frame.grid(row=i, column=j, padx=0, pady=0, sticky="nsew")
-        label = tk.Label(master=frame, text=f"{i}, {j}")
+        label = ctk_l.Label(master=frame, text=f"{i}, {j}")
         label.pack(padx=5, pady=5)
 
 # TIME
@@ -93,10 +93,9 @@ curr_time_tk.grid(column = 0, row = 0)
 access_code_tk = ttk.Label(master = main_window, textvariable = access_code)
 access_code_tk.grid(column = 1, row = 0)
 
-
 #Start time threads
 if __name__ == "__main__":
-    print("Class threads)")
+    print("Class threads")
     q_updates = queue.Queue()
 
     time_func = threading.Thread(target=clock_run, args=(q_updates,))
@@ -106,9 +105,12 @@ if __name__ == "__main__":
     time_func.start()
     update_func.start()
 
+
+
 # Run GUI with close event handler
 def exit_application():
     print("Terminating application....")
     os._exit(0)
+
 main_window.protocol("WM_DELETE_WINDOW", exit_application)
 main_window.mainloop()

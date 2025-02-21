@@ -1,6 +1,7 @@
 import json, jicson, requests
 from icalendar import Calendar, Event
 from io import StringIO
+import secrets
 import os
 
 cal_data_key = {
@@ -16,22 +17,26 @@ def pref_pull():
     with open(os.path.join(project_data_folder,"prefs.json"), 'r') as pref_read:
         return json.load(pref_read)
 
-with open(os.path.join(project_data_folder,"prefs.json"),'r+') as prefFile:
-    prefs = json.load(prefFile)
-    def cal_pull(url):
+with open(os.path.join(project_data_folder,"prefs.json"),'r+') as pref_file:
+    prefs = json.load(pref_file)
+    def cal_pull(url,curr_file_name):
         response = requests.get(url)
         import_store = jicson.fromText(response.text)
-        file_name = import_store["VCALENDAR"][0]["X-WR-CALNAME"]
-        with open(f"{project_data_folder}/{file_name}.json","w") as cal_import:
+        if curr_file_name:
+            file_name = curr_file_name
+        else:
+            file_name = secrets.token_hex(8)
+        with open(f"{project_data_folder}/private/{file_name}.json","w") as cal_import:
             json.dump(import_store, cal_import, indent=4)
-        return file_name
+            cal_import.close()
+        return file_name, cal_import["VCALENDAR"]["X-WR-CALNAME"]
 
 for currCal in prefs["calFeeds"]:
-    currCal["calFile"] = cal_pull(currCal["url"])
+    currCal["cal_file"] = cal_pull(currCal["url"],currCal["cal_file"])
 
 with open(os.path.join(project_data_folder,"prefs.json"), "w") as pref_file:
     json.dump(prefs, pref_file, indent=4)
 
-def fetch_ui_cal_events(num_events):
-
-    print("X")
+class CalInfoPull:
+    def info(self):
+        print()

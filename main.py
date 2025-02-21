@@ -1,26 +1,27 @@
 import tkinter as tk
-from tkinter import ttk, font
+import customtkinter as ctk_l
 from functools import partial
 import sys, os, socket, subprocess
-from PIL import Image, ImageTk, ImageFont
+from PIL import Image, ImageFont
 
-onstart_window = tk.Tk()
-onstart_window.title("DailyUpdate")
-window_offset_x = int((onstart_window.winfo_screenwidth() / 2) - 250)
-window_offset_y = int((onstart_window.winfo_screenheight() / 3) - 150)
-onstart_window.geometry(f"500x300+{window_offset_x}+{window_offset_y}")
+#ctk_l.set_default_color_theme("/data/interface_colors.json")
 
-image = Image.open("images/du-bg.png")
-bg_tk = ImageTk.PhotoImage(image)
-bg_label = tk.Label(onstart_window, image=bg_tk)
+start_window = ctk_l.CTk()
+start_window.title("DailyUpdate")
+window_offset_x = int((start_window.winfo_screenwidth() / 2) - 250)
+window_offset_y = int((start_window.winfo_screenheight() / 3) - 150)
+start_window.geometry(f"500x300+{window_offset_x}+{window_offset_y}")
+
+bg_tk = ctk_l.CTkImage(Image.open("images/du-bg.png"))
+bg_label = ctk_l.CTkLabel(start_window, image=bg_tk)
 bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 bg_label.image = bg_tk
 
 
 ImageFont.truetype("/fonts/SF-Pro-Rounded-Black.otf")
 ImageFont.truetype("/fonts/SF-Pro-Rounded-Regular.otf")
-f_sf_black_ttl_tk = font.Font(family="SF Pro Rounded Bold", size=50)
-f_sf_reg_opt_tk = font.Font(family="SF Pro Rounded Regular", size=15)
+f_sf_black_ttl_tk = ctk_l.CTkFont(family="SF Pro Rounded Bold", size=50)
+f_sf_reg_opt_tk = ctk_l.CTkFont(family="SF Pro Rounded Regular", size=15)
 
 
 def create_session(session_kind):
@@ -38,19 +39,19 @@ def create_session(session_kind):
                      start_new_session=True,
                      stdout=subprocess.DEVNULL,
                      stderr=subprocess.DEVNULL)
-    onstart_window.destroy()
+    start_window.destroy()
 
 
-onstart_window.columnconfigure((0, 0), weight=1)
-onstart_window.rowconfigure((0, 6), weight=1)
+start_window.columnconfigure((0, 0), weight=1)
+start_window.rowconfigure((0, 6), weight=1)
 
-window_header = ttk.Label(master=onstart_window, text="DailyUpdate", font=f_sf_black_ttl_tk,background="")
+window_header = ctk_l.CTkLabel(master=start_window, text="DailyUpdate", font=f_sf_black_ttl_tk)
 window_header.grid(column=0, row=0)
 
-window_option = ttk.Label(master=onstart_window, text="Select your system type.", font=f_sf_reg_opt_tk)
+window_option = ctk_l.CTkLabel(master=start_window, text="Select your system type.", font=f_sf_reg_opt_tk)
 window_option.grid(column=0, row=1)
 
-window_hostname = ttk.Label(master=onstart_window, text=socket.gethostname(), font=f_sf_reg_opt_tk)
+window_hostname = ctk_l.CTkLabel(master=start_window, text=socket.gethostname(), font=f_sf_reg_opt_tk)
 window_hostname.grid(column=0, row=2)
 
 button_executes = [
@@ -59,7 +60,7 @@ button_executes = [
     ["Client - Configuration", "c"]
 ]
 for i in range(3):
-    btn_crt = ttk.Button(master=onstart_window, text=button_executes[i][0],
+    btn_crt = ctk_l.CTkButton(master=start_window, text=button_executes[i][0],
                          command=partial(create_session, button_executes[i][1]))
     btn_crt.grid(column=0, row=i + 3)
 
@@ -72,5 +73,5 @@ def exit_application():
 
 
 
-onstart_window.protocol("WM_DELETE_WINDOW", exit_application)
-onstart_window.mainloop()
+start_window.protocol("WM_DELETE_WINDOW", exit_application)
+start_window.mainloop()

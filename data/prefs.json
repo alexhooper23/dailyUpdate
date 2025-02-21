@@ -10,7 +10,7 @@
                 "title",
                 "banana"
             ],
-            "calFile": "Personal"
+            "cal_file": "bf01837733d46740"
         },
         {
             "url": "https://calendars.icloud.com/holidays/us_en-us.ics/",
@@ -22,7 +22,7 @@
                 "title",
                 "banana"
             ],
-            "calFile": "US Holidays"
+            "cal_file": "aa5d8272eea5b48b"
         }
     ],
     "countdowns": {
