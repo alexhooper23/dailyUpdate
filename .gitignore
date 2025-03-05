@@ -3,8 +3,13 @@
 /.idea/
 *__pycache__/
 
-#macOS file management
+# macOS file management
 *.DS_Store
 
 # user data files
 /data/private/*
+!/data/private/calendars/
+!/data/private/logs/
+
+# misc
+objectives.txt

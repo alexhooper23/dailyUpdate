@@ -1,0 +1,32 @@
+{
+    "calFeeds": [
+        {
+            "url": "",
+            "prop_1": [
+                "",
+                ""
+            ],
+            "cal_file": ""
+        }
+    ],
+    "countdowns": {
+        "name1": "date1",
+        "name2": "date2",
+        "name3": "date3",
+        "name4": "date4"
+    },
+    "time": {
+        "seconds": true,
+        "format": 24,
+        "zone": "est",
+        "flash_col": false,
+        "am_pm": false
+    },
+    "weatherFormat": [
+        "ctemp",
+        "max",
+        "min",
+        "cprecip",
+        "chumid"
+    ]
+}
