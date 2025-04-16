@@ -1,8 +1,11 @@
+# ©2025 Alex Hooper Projects
+
 # generic pulls
 import os
 # pulls tools for thread sequencing to improve time accuracy
 import queue
 import random
+import json
 import socket
 import sys
 import threading
@@ -96,7 +99,7 @@ def find_devices_on_port(port):
     sock.close()
 
 
-find_devices_on_port(50008)
+
 
 
 def server_start():
@@ -130,8 +133,6 @@ def server_start():
                     conn.sendall(b"Acknowledge\n")
 
 
-server_start()
-
 # GUI Elements
 main_window.columnconfigure((5, 5), weight=3, uniform="a")
 main_window.rowconfigure(0, weight=3, uniform="a")
@@ -154,17 +155,21 @@ curr_time_tk.grid(column=0, row=0)
 access_code_tk = ctk_l.CTkLabel(master=main_window, textvariable=access_code)
 access_code_tk.grid(column=1, row=0)
 
-# Start time threads
-if __name__ == "__main__":
-    log("Class threads")
-    q_updates = queue.Queue()
 
-    time_func = threading.Thread(target=clock_run, args=(q_updates,))
-    update_func = threading.Thread(target=clock_update_response, args=(q_updates,))
+def load_widgets():
+    with open(os.path.dirname(os.getcwd()) + "/data/private/widget_layout.json", "r") as wgt_lo:
+        wgt_lo_json = json.load(wgt_lo)
+        head_data = []
+        x = 0
+        for unique_widget in wgt_lo_json:
+            print(wgt_lo_json[unique_widget])
+            # x, y, w, l, id
+            head_data[x] = [unique_widget["pos"], unique_widget["size"], str(unique_widget)]
+    curr_time_tk = ctk_l.CTkLabel(master=main_window, textvariable=time_tk)
+    curr_time_tk.grid(column=0, row=0)
 
-    # Start threads
-    time_func.start()
-    update_func.start()
+
+load_widgets()
 
 
 # Run GUI with close event handler
@@ -174,5 +179,29 @@ def exit_application():
     sys.exit(0)
 
 
+# Start time threads
+if __name__ == "__main__":
+    log("Class threads")
+    print("Main class starting")
+    q_updates = queue.Queue()
+
+    time_func = threading.Thread(target=clock_run, args=(q_updates,))
+    update_func = threading.Thread(target=clock_update_response, args=(q_updates,))
+    network_func = threading.Thread(target=find_devices_on_port, args=(50008,))
+    server_func = threading.Thread(target=server_start)
+    # Start threads
+    network_func.start()
+    server_func.start()
+    time_func.start()
+    update_func.start()
+
+print("To bottom")
 main_window.protocol("WM_DELETE_WINDOW", exit_application)
 main_window.mainloop()
+
+
+
+
+
+
+

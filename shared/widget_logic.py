@@ -1,3 +1,5 @@
+# ©2025 Alex Hooper Projects
+
 from calendar import day_abbr
 from datetime import date
 from dateutil.relativedelta import relativedelta
@@ -20,11 +22,11 @@ class CountdownWidget:
     def fetch(self):
         return [self.label, self.time_until]
 
-    def create_new(self, end_date="12/25", label="Christmas"):
+    def create_new(self, end_date="12/31", label="Last day of Year"):
         end_date_formatted = date.fromisoformat(end_date)
         self.update(end_date_formatted)
         self.identifier = CountdownWidgetData().new(label, end_date)
-        self.fetch()
+        return self.fetch()
 
     def remove(self):
         CountdownWidgetData().remove(self.identifier)

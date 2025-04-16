@@ -1,3 +1,5 @@
+# ©2025 Alex Hooper Projects
+
 import inspect
 import jicson
 import json
@@ -70,18 +72,24 @@ class CountdownWidgetData:
     def new(self, label_input, date_input):
         with open(os.path.join(project_data_folder, "prefs.json"), "r+") as int_pref_file:
             editable_prefs = json.load(int_pref_file)
+            self.identifier = secrets.token_hex(8)
             editable_prefs["countdowns"][self.identifier]["label"] = label_input
             editable_prefs["countdowns"][self.identifier]["date"] = date_input
-            self.identifier = secrets.token_hex(8)
             json.dump(editable_prefs, int_pref_file, indent=4)
             int_pref_file.close()
         return self.identifier
 
-    def update(self):
-        print()
+    def update(self, label, date):
+        with open(os.path.join(project_data_folder, "prefs.json"), "r+") as int_pref_file:
+            editable_prefs = json.load(int_pref_file)
+            editable_prefs["countdowns"][self.identifier]["label"] = label
+            editable_prefs["countdowns"][self.identifier]["date"] = date
+
 
     def retrieve(self):
-        print()
+        with open(os.path.join(project_data_folder, "prefs.json"), "r+") as int_pref_file:
+            editable_prefs = json.load(int_pref_file)
+            return [self.label, self.date]
 
     def remove(self, identifier):
         print()

@@ -1,3 +1,5 @@
+# ©2025 Alex Hooper Projects
+
 import json
 import os
 import socket
@@ -31,7 +33,6 @@ sf_version = "0.0.05"
 def gen_identifier_info():
     identifier_key = secrets.token_hex(16)
     log("Machine identifier key was corrupt or nonexistent. New key generated -->", identifier_key)
-    log("MACHINE SHORTNAME -->", identifier_key[-5:-1])
     return [identifier_key + "\n", sf_version]
 
 
@@ -45,7 +46,6 @@ else:
             f_lines = gen_identifier_info()
         else:
             f_lines[1] = sf_version
-        log("MACHINE SHORTNAME  -->", f_lines[0][-5:-1])
         f.seek(0)
         f.truncate()
         f.writelines(f_lines)
@@ -98,10 +98,7 @@ def register_identifier(kind):
 def create_session(session_kind):
     with open("data/private/machine_identifiers.json", "r+") as machine_identifiers:
         json_identifiers = json.load(machine_identifiers)
-        print(json_identifiers)
-        print(type(json_identifiers))
         for key, each in json_identifiers.items():
-            print(type(each))
             each["sessions_since_last_connection"] += 1
         machine_identifiers.seek(0)
         json.dump(json_identifiers, machine_identifiers, indent=4)
@@ -119,11 +116,12 @@ def create_session(session_kind):
         log("Session code not recognized.")
         return
     log("Running new session with session code", session_kind)
-    """subprocess.Popen([sys.executable, machine_path],
+    subprocess.Popen([sys.executable, machine_path],
                      start_new_session=True,
                      stdout=subprocess.DEVNULL,
                      stderr=subprocess.DEVNULL)
-    start_window.destroy()"""
+    #start_window.destroy()
+
 
 create_session("c")
 

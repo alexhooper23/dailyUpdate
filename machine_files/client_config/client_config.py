@@ -1,1 +1,0 @@
-print("Session code c initiated")

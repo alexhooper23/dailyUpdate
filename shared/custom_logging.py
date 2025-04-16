@@ -1,12 +1,27 @@
+# ©2025 Alex Hooper Projects
+
 from datetime import datetime
 import os
 import inspect
 from inspect import currentframe
+import socket
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.connect(('8.8.8.8', 80))
+local_ip = sock.getsockname()[0]
+sock.close()
 
 
 # This class is defined to ensure the correct file path when this file is called from somewhere else.
 class Dummy:
     print()
+
+
+with open(os.path.dirname(os.path.dirname(inspect.getfile(Dummy))) + "/data/private/sys_identifiers", "r") as f:
+    sys_quick_id = f.readline()[-7:-1]
+
+
+print("SYS ID:", sys_quick_id)
 
 
 def validate_bool(check_itm, kind="This variable"):
@@ -64,10 +79,10 @@ class Log:
         :return:
         """
         text = str(text)
+        log_output = f"{str(datetime.now())}\t{local_ip}\t{sys_quick_id}\t{inspect.stack()[1].filename.split("/")[-1:][0]}\t{text}\n"
         if self.console_enable:
-            print(text)
+            print(log_output)
         if self.file_enable:
-            log_output = f"{str(datetime.now())}\t{text}\n"
             with open(self.log_file_name, "a") as log_file:
                 log_file.write(log_output)
                 log_file.close()
@@ -91,3 +106,6 @@ class Log:
         """
         for filename in os.listdir("data/private/logs/"):
             open(filename, "w").close()
+
+
+# add additional class for updating of vebosity 1/5 and determine verbosity levels
